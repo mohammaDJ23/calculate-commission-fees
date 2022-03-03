@@ -1,27 +1,33 @@
 const Request = require("../service");
-const apis = require("../helpers/apis");
-const { CASH_IN, CASH_OUT_NATURAL, CASH_OUT_JURIDICAL } = require("../helpers/types");
+const api = require("../helpers/apis");
+const { APIS } = require("../helpers/types");
+
+const { CASH_IN, CASH_OUT_JURIDICAL, CASH_OUT_NATURAL } = APIS;
 
 module.exports = class Fees {
   constructor() {
-    this.cashIn = null;
-    this.cashOutNatural = null;
-    this.cashOutJuridical = null;
+    this.cashIn = {};
+    this.cashOutNatural = {};
+    this.cashOutJuridical = {};
   }
 
-  static build() {
-    return new Fees();
+  static async build() {
+    const fees = new Fees();
+
+    await Promise.all([fees.getCashIn(), fees.getCashOutNatural(), fees.getCashOutJuridical()]);
+
+    return fees;
   }
 
   async getCashIn() {
-    this.cashIn = await Request.req(apis[CASH_IN]());
+    this.cashIn = await Request.req(api[CASH_IN]());
   }
 
   async getCashOutNatural() {
-    this.cashOutNatural = await Request.req(apis[CASH_OUT_NATURAL]());
+    this.cashOutNatural = await Request.req(api[CASH_OUT_NATURAL]());
   }
 
   async getCashOutJuridical() {
-    this.cashOutJuridical = await Request.req(apis[CASH_OUT_JURIDICAL]());
+    this.cashOutJuridical = await Request.req(api[CASH_OUT_JURIDICAL]());
   }
 };
