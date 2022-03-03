@@ -6,15 +6,15 @@
  *
  *  [{
  *    "date": "2016-01-06",
- *    "user_id": 1,
- *    "user_type": "natural",
+ *    "userId": 1,
+ *    "userType": "natural",
  *    "type": "cash_out",
  *    "operation": { "amount": 30000, "currency": "EUR" }
  *  },
  *  {
  *    "date": "2016-01-07",
- *    "user_id": 1,
- *    "user_type": "natural",
+ *    "userId": 1,
+ *    "userType": "natural",
  *    "type": "cash_out",
  *    "operation": { "amount": 1000, "currency": "EUR" }
  *  }]
@@ -33,8 +33,8 @@ module.exports = class Weeks {
     this.weeks = new Map();
   }
 
-  getUniqueKey({ date, user_id, user_type, type }) {
-    return `${new Date(date).getWeek()}_${user_id}_${user_type}_${type}`;
+  getUniqueKey({ date, userId, userType, type }) {
+    return `${new Date(date).getWeek()}_${userId}_${userType}_${type}`;
   }
 
   getWeekAmount(uniqueKey) {

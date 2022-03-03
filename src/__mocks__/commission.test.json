@@ -18,7 +18,7 @@
     "user_id": 1,
     "user_type": "natural",
     "type": "cash_out",
-    "operation": { "amount": 30000, "currency": "EUR" }
+    "operation": { "amount": 40000, "currency": "EUR" }
   },
   {
     "date": "2016-01-07",

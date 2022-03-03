@@ -1,2 +1,3 @@
-require("./helpers/prototypes");
-require("./commission-fee")();
+require('dotenv').config();
+require('./utility/prototypes');
+require('./app')();

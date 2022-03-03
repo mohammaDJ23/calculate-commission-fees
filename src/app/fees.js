@@ -1,6 +1,6 @@
-const Request = require("../service");
-const api = require("../helpers/apis");
-const { APIS } = require("../helpers/types");
+const Request = require('../utility/service');
+const api = require('../utility/apis');
+const { APIS } = require('../utility/types');
 
 const { CASH_IN, CASH_OUT_JURIDICAL, CASH_OUT_NATURAL } = APIS;
 

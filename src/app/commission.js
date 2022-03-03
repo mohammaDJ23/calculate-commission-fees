@@ -1,6 +1,6 @@
-const Weeks = require("./weeks");
+const Weeks = require('./weeks');
 
-const { USERS, OPERATIONS } = require("../helpers/types");
+const { USERS, OPERATIONS } = require('../utility/types');
 
 const { NATURAL, JURIDICAL } = USERS;
 const { CASH_IN, CASH_OUT } = OPERATIONS;
@@ -11,10 +11,6 @@ module.exports = class Commission extends Weeks {
 
     this.data = data;
     this.fees = fees;
-
-    // final results would be here
-
-    this.results = [];
   }
 
   static build({ data, fees }) {
@@ -22,8 +18,8 @@ module.exports = class Commission extends Weeks {
   }
 
   weeksAmounts() {
-    for (const obj of this.data) {
-      this.calculateWeekAmount(obj);
+    for (let i = 0; i < this.data.length; i += 1) {
+      this.calculateWeekAmount(this.data[i]);
     }
   }
 
@@ -50,10 +46,10 @@ module.exports = class Commission extends Weeks {
 
     const { amount } = obj.operation;
 
-    const { percents, week_limit } = this.fees.cashOutNatural;
+    const { percents, week_limit: weeklyLimit } = this.fees.cashOutNatural;
 
     const percent = percents / 100;
-    const weekLimit = week_limit.amount;
+    const weekLimit = weeklyLimit.amount;
 
     if (weekAmount > weekLimit) {
       // if weekAmount of the user was grater than weekLimit
@@ -62,19 +58,17 @@ module.exports = class Commission extends Weeks {
         // calculating exceeded amount
 
         return ((amount - weekLimit) * percent).toFixed(2);
-      } else {
-        return (amount * percent).toFixed(2);
       }
-    } else {
-      // if weekAmount of the user was less than weekLimit
-      // we don't calculate the commission fee
-
-      return (0).toFixed(2);
+      return (amount * percent).toFixed(2);
     }
+    // if weekAmount of the user was less than weekLimit
+    // we don't calculate the commission fee
+
+    return (0).toFixed(2);
   }
 
   cashOut(obj) {
-    switch (obj.user_type) {
+    switch (obj.userType) {
       case NATURAL:
         return this.naturalPerson(obj);
 
@@ -82,7 +76,7 @@ module.exports = class Commission extends Weeks {
         return this.legalPerson(obj);
 
       default:
-        throw new Error("Invalid user type");
+        throw new Error('Invalid user type');
     }
   }
 
@@ -95,20 +89,22 @@ module.exports = class Commission extends Weeks {
         return this.cashIn(obj);
 
       default:
-        throw new Error("Invalid operation type");
+        throw new Error('Invalid operation type');
     }
   }
 
-  getCommission() {
+  getCommissionFees() {
     // getting weekly amounts of all users based on unique id
     // before getting commission fees
 
     this.weeksAmounts();
 
-    for (const obj of this.data) {
-      this.results.push(this.compare(obj));
+    const commissionFees = [];
+
+    for (let i = 0; i < this.data.length; i += 1) {
+      commissionFees.push(this.compare(this.data[i]));
     }
 
-    return this.results;
+    return commissionFees;
   }
 };
