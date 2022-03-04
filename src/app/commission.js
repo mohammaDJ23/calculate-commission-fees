@@ -28,7 +28,7 @@ module.exports = class Commission extends Weeks {
 
     const fee = obj.operation.amount * (percents / 100);
 
-    return fee.min(max.amount).toFixed(2);
+    return fee.min(max.amount);
   }
 
   legalPerson(obj) {
@@ -36,7 +36,7 @@ module.exports = class Commission extends Weeks {
 
     const fee = obj.operation.amount * (percents / 100);
 
-    return fee.max(min.amount).toFixed(2);
+    return fee.max(min.amount);
   }
 
   naturalPerson(obj) {
@@ -57,14 +57,14 @@ module.exports = class Commission extends Weeks {
       if (amount > weekLimit) {
         // calculating exceeded amount
 
-        return ((amount - weekLimit) * percent).toFixed(2);
+        return (amount - weekLimit) * percent;
       }
-      return (amount * percent).toFixed(2);
+      return amount * percent;
     }
     // if weekAmount of the user was less than weekLimit
     // we don't calculate the commission fee
 
-    return (0).toFixed(2);
+    return 0;
   }
 
   cashOut(obj) {
@@ -102,7 +102,9 @@ module.exports = class Commission extends Weeks {
     const commissionFees = [];
 
     for (let i = 0; i < this.data.length; i += 1) {
-      commissionFees.push(this.compare(this.data[i]));
+      const fee = this.compare(this.data[i]).ceil(2);
+
+      commissionFees.push(fee);
     }
 
     return commissionFees;

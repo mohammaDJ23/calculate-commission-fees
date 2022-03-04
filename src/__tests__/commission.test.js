@@ -14,13 +14,13 @@ describe('Commission', () => {
   test('Calculate commission fee of cash in', () => {
     const commission = Commission.build({ fees });
 
-    expect(commission.cashIn(data[0])).toBe('0.06');
+    expect(commission.cashIn(data[0]).ceil(2)).toBe('0.06');
   });
 
   test('Calculate commission fee of legal person', () => {
     const commission = Commission.build({ fees });
 
-    expect(commission.legalPerson(data[1])).toBe('0.90');
+    expect(commission.legalPerson(data[1]).ceil(2)).toBe('0.90');
   });
 
   test('Calculate commission fee of natural person with week amount and amount of greater than 1000', () => {
@@ -28,7 +28,7 @@ describe('Commission', () => {
 
     commission.weeksAmounts();
 
-    expect(commission.naturalPerson(data[2])).toBe('117.00');
+    expect(commission.naturalPerson(data[2]).ceil(2)).toBe('117.00');
   });
 
   test('Calculate commission fee of natural person with week amount of greater than 1000 and amount of less than 1000', () => {
@@ -36,7 +36,7 @@ describe('Commission', () => {
 
     commission.weeksAmounts();
 
-    expect(commission.naturalPerson(data[4])).toBe('0.30');
+    expect(commission.naturalPerson(data[4]).ceil(2)).toBe('0.30');
   });
 
   test('Calculate commission fee of natural person with week amount of less than 1000', () => {
@@ -44,7 +44,7 @@ describe('Commission', () => {
 
     commission.weeksAmounts();
 
-    expect(commission.naturalPerson(data[9])).toBe('0.00');
+    expect(commission.naturalPerson(data[9]).ceil(2)).toBe('0.00');
   });
 
   test('Calculate commission fee of all users', () => {

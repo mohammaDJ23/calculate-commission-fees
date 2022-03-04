@@ -6,6 +6,10 @@ Number.prototype.min = function min(...number) {
   return Math.min(this, ...number);
 };
 
+Number.prototype.ceil = function ceil(decimalCount) {
+  return (Math.ceil(this * 100) / 100).toFixed(decimalCount);
+};
+
 Date.prototype.getWeek = function getWeek() {
   const target = new Date(this.valueOf());
 
