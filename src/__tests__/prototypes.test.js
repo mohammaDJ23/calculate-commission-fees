@@ -17,4 +17,16 @@ describe('Prototypes', () => {
     expect((0.023).ceil(2)).toBe('0.03');
     expect((0.23).ceil(2)).toBe('0.23');
   });
+
+  test('Converting snake_case to camelCase in obj', () => {
+    const obj = { user_id: 1 };
+
+    expect(obj.toCamelCase()).toStrictEqual({ userId: 1 });
+  });
+
+  test('Converting snake_case to camelCase in array', () => {
+    const arrOfObj = [{ user_id: 1 }];
+
+    expect(arrOfObj.toCamelCase()).toStrictEqual([{ userId: 1 }]);
+  });
 });

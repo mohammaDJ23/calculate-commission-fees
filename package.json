@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.js ../../data.json",
     "test": "jest --setupFiles dotenv/config",
-    "test:watch": "jest --watch --setupFiles dotenv/config"
+    "test:watch": "jest --watchAll --setupFiles dotenv/config"
   },
   "keywords": [],
   "author": "mohammad nowresideh",
